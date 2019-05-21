@@ -55,7 +55,7 @@ function Course(props) {
       <CourseHeader>
         <h1>{props.courseName}</h1>
         <h2><strong>{props.courseCredits}</strong> SKS, Term <strong>{props.courseTerm}</strong></h2>
-        <h3>{props.courseId} — {props.courseCurriculum} — {props.coursePreRequisite}</h3>
+        <h3>{props.courseId} — Kurikulum {props.courseCurriculum} — Prasyarat: {props.coursePrerequisite ? props.coursePrerequisite : 'n/a'}</h3>
         <h6>Kelas tersedia:</h6>
       </CourseHeader>
       {Object.values(props.courseClasses).map(courseClass => (
@@ -298,8 +298,8 @@ const CourseClass = styled.div`
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    align-items: center;
-    align-content: center;
+    align-items: stretch;
+    align-content: stretch;
   }
 
   .classDetail {
@@ -354,6 +354,11 @@ const CourseClass = styled.div`
 
     &:last-of-type {
       border-radius: 0 0 0 0.5rem;
+    }
+
+    &:only-of-type {
+      border-radius: 0.5rem 0 0 0.5rem;
+      border-top: none;
     }
 
     h3,

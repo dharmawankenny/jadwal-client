@@ -19,14 +19,16 @@ export default function reducers(state, action) {
   const stateKey = action.type.split('_')[0];
   const update = actor(state[stateKey], action.payload);
 
-  console.log('prev state: ', state);
-  console.log('next state: ', {
-    ...state,
-    [stateKey]: {
-      ...state[stateKey],
-      ...update,
-    },
-  });
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('prev state: ', state);
+    console.log('next state: ', {
+      ...state,
+      [stateKey]: {
+        ...state[stateKey],
+        ...update,
+      },
+    });
+  }
 
   return {
     ...state,

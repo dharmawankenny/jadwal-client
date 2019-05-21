@@ -28,8 +28,7 @@ export function loadMajorsFinished(payload) {
 }
 
 export async function fetchMajors() {
-  // replace this later
-  await new Promise(resolve => setTimeout(resolve, 1000));
+  // replace this later, hard code for now
   const majors = [
     {
       id: 'ilkom',
