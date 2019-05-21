@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useBase, { useBaseInitiation, useBaseWatcher } from './hooks/useBase';
+import useBase, { useBaseInitiation, useBaseWatcher, useValidateBase } from './hooks/useBase';
 import useMajors, { useMajorsInitiation } from './hooks/useMajors';
 import useSchedules, { useSchedulesInitiation } from './hooks/useSchedules';
 
@@ -15,6 +15,7 @@ export default function App() {
   useMajorsInitiation();
   useSchedulesInitiation();
   useBaseWatcher();
+  useValidateBase();
 
   const [baseState] = useBase();
   const [majorsState] = useMajors();
