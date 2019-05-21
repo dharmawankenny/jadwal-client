@@ -1,19 +1,38 @@
-import baseReducer, { initialState as baseInitialState } from './base';
-import majorReducer, { initialState as majorInitialState } from './majors';
+import baseReducer, { StateKey as BaseStateKey, initialState as baseInitialState } from './base';
+import majorReducer, { StateKey as MajorStateKey, initialState as majorInitialState } from './majors';
+import scheduleReducer, { StateKey as ScheduleStateKey, initialState as scheduleInitialState } from './schedules';
 
 export const initialState = {
-  ...baseInitialState,
-  ...majorInitialState,
+  [BaseStateKey]: baseInitialState,
+  [MajorStateKey]: majorInitialState,
+  [ScheduleStateKey]: scheduleInitialState,
 };
 
 const reducerMap = {
   ...baseReducer,
   ...majorReducer,
+  ...scheduleReducer,
 };
 
 export default function reducers(state, action) {
   const actor = reducerMap[action.type];
-  const update = actor(state, action.payload);
+  const stateKey = action.type.split('_')[0];
+  const update = actor(state[stateKey], action.payload);
 
-  return { ...state, ...update };
+  console.log('prev state: ', state);
+  console.log('next state: ', {
+    ...state,
+    [stateKey]: {
+      ...state[stateKey],
+      ...update,
+    },
+  });
+
+  return {
+    ...state,
+    [stateKey]: {
+      ...state[stateKey],
+      ...update,
+    },
+  };
 }

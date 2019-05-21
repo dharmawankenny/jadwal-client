@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useStore, useDispatch } from '../store/Store';
-import { hydrateBase, initialState } from '../reducers/base';
+import { hydrateBase, selectBaseMajor, setSchedule, deleteSchedule, initialState } from '../reducers/base';
 
 const BASE_STORAGE_KEY = 'JADWAL_LOCAL_STORAGE_BASE_DATA';
 let storage;
@@ -13,6 +13,20 @@ export default function useBase() {
   const store = useStore();
   const dispatch = useDispatch();
 
+  return [
+    store.base,
+    {
+      hydrateBase: payload => dispatch(hydrateBase(payload)),
+      selectBaseMajor: payload => dispatch(selectBaseMajor(payload)),
+      setSchedule: payload => dispatch(setSchedule(payload)),
+      deleteSchedule: payload => dispatch(deleteSchedule(payload)),
+    },
+  ];
+}
+
+export function useBaseInitiation() {
+  const [_, { hydrateBase }] = useBase();
+
   useEffect(
     () => {
       async function hydrate() {
@@ -20,12 +34,12 @@ export default function useBase() {
           const hydrationData = storage.getItem(BASE_STORAGE_KEY);
 
           if (hydrationData && hydrationData !== '') {
-            dispatch(hydrateBase(JSON.parse(hydrationData)));
+            hydrateBase(JSON.parse(hydrationData));
           } else {
-            dispatch(hydrateBase(initialState.base));
+            hydrateBase(initialState);
           }
         } else {
-          dispatch(hydrateBase(initialState.base));
+          hydrateBase(initialState);
         }
       }
 
@@ -33,15 +47,17 @@ export default function useBase() {
     },
     []
   );
+}
+
+export function useBaseWatcher() {
+  const [base] = useBase();
 
   useEffect(
     () => {
-      if (store.base.hydrated) {
-        storage.setItem(BASE_STORAGE_KEY, JSON.stringify(store.base));
+      if (base.hydrated) {
+        storage.setItem(BASE_STORAGE_KEY, JSON.stringify(base));
       }
     },
-    [store.base]
+    [base]
   );
-
-  return store.base;
 }

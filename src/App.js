@@ -1,17 +1,33 @@
 import React from 'react';
-import { useStore } from './store/Store';
-import useBase from './hooks/useBase';
+
+import useBase, { useBaseInitiation, useBaseWatcher } from './hooks/useBase';
+import useMajors, { useMajorsInitiation } from './hooks/useMajors';
+import useSchedules, { useSchedulesInitiation } from './hooks/useSchedules';
+
+import PageLoader from './components/PageLoader';
+
+import MajorSelection from './containers/MajorSelection';
+import ScheduleSelection from './containers/ScheduleSelection';
+import ScheduleView from './containers/ScheduleView';
 
 export default function App() {
-  const store = useStore();
+  useBaseInitiation();
+  useMajorsInitiation();
+  useSchedulesInitiation();
+  useBaseWatcher();
 
-  console.log(store);
+  const [baseState] = useBase();
+  const [majorsState] = useMajors();
+  const [schedulesState] = useSchedules();
 
-  const baseState = useBase();
-
-  console.log(baseState);
+  const isLoading = !baseState.hydrated || majorsState.isLoading || schedulesState.isLoading;
 
   return (
-    <div>Hello</div>
+    <>
+      <PageLoader isLoading={isLoading} />
+      {(baseState.selectedMajor === '' && !isLoading)  && <MajorSelection />}
+      {(baseState.selectedMajor !== '' && !isLoading) && <ScheduleSelection />}
+      {(baseState.selectedMajor !== '' && !isLoading)  && <ScheduleView />}
+    </>
   );
 }
