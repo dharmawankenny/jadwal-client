@@ -10,6 +10,8 @@ import useBase from '../hooks/useBase';
 import useSchedules from '../hooks/useSchedules';
 import useMajors from '../hooks/useMajors';
 
+import { filterCourseByQuery } from '../utils/utils';
+
 import Card from '../components/Card';
 
 const DAY_NAMES = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
@@ -43,7 +45,7 @@ export default function ScheduleSelection() {
           </div>
         </Card>
       </ScheduleListHeader>
-      {Object.values(selectedScheduleList.courses).map(courseClass => <Course {...courseClass} />)}
+      {Object.values(selectedScheduleList.courses).filter(course => filterCourseByQuery(course, searchQuery)).map(course => <Course {...course} />)}
     </Wrapper>
   );
 }
@@ -54,7 +56,7 @@ function Course(props) {
     <Card padding="2rem" margin="2rem 0 0">
       <CourseHeader>
         <h1>{props.courseName}</h1>
-        <h2><strong>{props.courseCredits}</strong> SKS, Term <strong>{props.courseTerm}</strong></h2>
+        <h2><strong>{props.courseSKS}</strong> SKS, Term <strong>{props.courseTerm}</strong></h2>
         <h3>{props.courseId} — Kurikulum {props.courseCurriculum} — Prasyarat: {props.coursePrerequisite ? props.coursePrerequisite : 'n/a'}</h3>
         <h6>Kelas tersedia:</h6>
       </CourseHeader>

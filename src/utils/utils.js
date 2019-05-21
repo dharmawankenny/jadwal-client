@@ -19,7 +19,7 @@ export function getSelectedClasses(selectedSchedule, courses) {
       return {
         courseId,
         courseTerm: courses[courseId].courseTerm,
-        courseCredits: courses[courseId].courseCredits,
+        courseSKS: courses[courseId].courseSKS,
         ...courses[courseId].courseClasses[selectedSchedule[courseId]],
       };
     });
@@ -72,7 +72,7 @@ function isHourIntersectEachOther(from, to, compareFrom, compareTo) {
 }
 
 export function countTotalSKS(classes) {
-  return classes.reduce((res, cur) => (res + Number(cur.courseCredits)), 0);
+  return classes.reduce((res, cur) => (res + Number(cur.courseSKS)), 0);
 }
 
 export function countTotalSchedules(classes) {
@@ -93,4 +93,26 @@ export function flattenClassSchedules(selectedClasses) {
   });
 
   return classSchedules;
+}
+
+export function filterCourseByQuery(course, query) {
+  if (query.toLowerCase().startsWith('sks: ')) {
+    const sksQuery = Number(query.toLowerCase().replace('sks: ', ''));
+
+    if (Number.isNaN(sksQuery)) return true;
+    if (Number(course.courseSKS) === sksQuery) return true;
+
+    return false;
+  }
+
+  if (query.toLowerCase().startsWith('term: ')) {
+    const termQuery = Number(query.toLowerCase().replace('term: ', ''));
+
+    if (Number.isNaN(termQuery)) return true;
+    if (Number(course.courseTerm) === termQuery) return true;
+
+    return false;
+  }
+
+  return course.courseName.toLowerCase().includes(query.toLowerCase());
 }

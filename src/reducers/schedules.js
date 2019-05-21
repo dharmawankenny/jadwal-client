@@ -19,7 +19,7 @@ const SchedulesActionTypes = {
  *        courseName: string;
  *        courseId: string;
  *        courseTerm: string;
- *        courseCredits: string;
+ *        courseSKS: string;
  *        courseCurriculum: string;
  *        coursePreRequisite: string;
  *        courseClasses: {
