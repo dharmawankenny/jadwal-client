@@ -51,7 +51,7 @@ export default function ScheduleSelection() {
 function Course(props) {
   const [{ selectedMajor, selectedSchedule }, { setSchedule, deleteSchedule }] = useBase();
   return (
-    <Card padding="2rem">
+    <Card padding="2rem" margin="2rem 0 0">
       <CourseHeader>
         <h1>{props.courseName}</h1>
         <h2><strong>{props.courseCredits}</strong> SKS, Term <strong>{props.courseTerm}</strong></h2>
@@ -99,7 +99,7 @@ function Course(props) {
 
 const Wrapper = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: calc(1200px + 4rem);
   min-height: 100vh;
   padding: 8rem 2rem 4rem;
   margin: 0 auto;
@@ -137,7 +137,7 @@ const LogoDesc = styled.div`
 
 const ScheduleListHeader = styled.div`
   width: 100%;
-  margin: 6rem 0 2rem;
+  margin: 6rem 0 0;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;

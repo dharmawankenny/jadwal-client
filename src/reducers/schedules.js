@@ -1,3 +1,5 @@
+import { arrToObject, countClass } from '../utils/utils';
+
 export const StateKey = 'schedule';
 
 const SchedulesActionTypes = {
@@ -116,6 +118,56 @@ export async function fetchSchedules() {
     semester: 'Semester Ganjil 2019/2020',
     courses: [
       {
+        courseName: 'Aljabar Linear',
+        courseId: 'CSGE602012',
+        courseTerm: 3,
+        courseCredits: 3,
+        courseCurriculum: 'Kurikulum 06.00.12.01-2016',
+        coursePreRequisite: 'Prasyarat: UIST601014 - Matematika Dasar 1',
+        courseClasses: [
+          {
+            className: 'Aljabar Linier — A',
+            classLecturer: 'Dr. Dra. Kasiyah M.Sc',
+            classSchedules: [
+              {
+                day: 0,
+                startTime: '08:00',
+                endTime: '09:40',
+                duration: 100,
+                location: '2.2304',
+              },
+              {
+                day: 4,
+                startTime: '16:00',
+                endTime: '16:50',
+                duration: 50,
+                location: '2.2304',
+              },
+            ],
+          },
+          {
+            className: 'Aljabar Linier — B',
+            classLecturer: 'Dr. Dra. Kasiyah M.Sc',
+            classSchedules: [
+              {
+                day: 0,
+                startTime: '16:00',
+                endTime: '17:40',
+                duration: 100,
+                location: '2.2304',
+              },
+              {
+                day: 4,
+                startTime: '08:00',
+                endTime: '08:50',
+                duration: 50,
+                location: '2.2304',
+              },
+            ],
+          },
+        ],
+      },
+      {
         courseName: 'Statistika Terapan',
         courseId: 'CSGE602010',
         courseTerm: 5,
@@ -193,18 +245,6 @@ export async function fetchSchedules() {
   };
 
   return loadSchedulesFinished({ ilkom: processedIlkomSchedule, si: processedSiSchedule });
-}
-
-function arrToObject(arr, key) {
-  const res = {};
-
-  arr.forEach(item => (res[item[key]] = item));
-
-  return res;
-}
-
-function countClass(courses) {
-  return courses.reduce((res, cur) => (res + cur.courseClasses.length), 0);
 }
 
 export default {

@@ -39,7 +39,7 @@ export default function MajorSelection() {
 
 const Wrapper = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: calc(1200px + 4rem);
   min-height: 100vh;
   padding: 2rem;
   margin: 0 auto;

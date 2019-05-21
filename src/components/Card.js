@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function Card(props) {
-  const { width = '100%', padding = '1rem', lite = false } = props;
+  const { width = '100%', height = 'auto', padding = '1rem', margin = 0, lite = false } = props;
 
   return (
-    <CardWrapper width={width} padding={padding} lite={lite}>
+    <CardWrapper width={width} height={height} padding={padding} margin={margin} lite={lite}>
       {props.children}
     </CardWrapper>
   );
@@ -13,7 +13,9 @@ export default function Card(props) {
 
 const CardWrapper = styled.div`
   width: ${props => props.width};
+  height: ${props => props.height};
   padding: ${props => props.padding};
+  margin: ${props => props.margin};
   background: #FFF;
   border-radius: 0.5rem;
   box-shadow: ${props => props.lite ?

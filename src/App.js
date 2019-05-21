@@ -8,6 +8,7 @@ import PageLoader from './components/PageLoader';
 
 import MajorSelection from './containers/MajorSelection';
 import ScheduleSelection from './containers/ScheduleSelection';
+import ScheduleView from './containers/ScheduleView';
 
 export default function App() {
   useBaseInitiation();
@@ -24,8 +25,9 @@ export default function App() {
   return (
     <>
       <PageLoader isLoading={isLoading} />
-      {baseState.selectedMajor === '' && <MajorSelection />}
-      {baseState.selectedMajor !== '' && <ScheduleSelection />}
+      {(baseState.selectedMajor === '' && !isLoading)  && <MajorSelection />}
+      {(baseState.selectedMajor !== '' && !isLoading) && <ScheduleSelection />}
+      {(baseState.selectedMajor !== '' && !isLoading)  && <ScheduleView />}
     </>
   );
 }

@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import LogoIcon from '../statics/logo.svg';
+
 export default function PageLoader(props) {
   return (
     <Loader active={props.isLoading}>
       <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
       <h1>Initiating<span>🚀</span>Propellers</h1>
+      <img src={LogoIcon} />
     </Loader>
   );
 }
@@ -17,6 +20,7 @@ const Loader = styled.div`
   align-items: flex-start;
   justify-content: center;
   position: fixed;
+  z-index: 1000;
   top: 0;
   right: 0;
   bottom: 0;
@@ -29,6 +33,13 @@ const Loader = styled.div`
   transition: ${props => props.active ?
     '0.37s ease opacity 0.125s, 0.375s ease transform' :
     '0.375s ease opacity 0.5s, 0.375s ease transform 0.375s'};
+
+  img {
+    height: 2.5rem;
+    margin-top: 10rem;
+    opacity: ${props => props.active ? 1 : 0};
+    transition: 0.375s ease all;
+  }
 
   h1 {
     width: 100%;
